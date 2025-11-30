@@ -1,97 +1,209 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# User Authentication App (React Native)
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+**Note**: This is a simple authentication app built with React Native CLI, created as part of a developer assessment.
+The goal was to put together a small but complete auth flow using React Navigation, Context API, and AsyncStorage.
 
-## Step 1: Start Metro
+The app supports both iOS and Android.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## What the app does
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### ✔ Signup
+```sh
+- Validates name, email, and password
+
+- Ensures email has valid format
+
+- Password must be minimum 6 characters
+
+- Email is normalized to avoid iOS auto-capitalization issues
+
+- A new user is added to AsyncStorage → "users"
+
+- User is automatically logged in and navigated to the Home screen
+```
+### ✔ Login
+```sh
+- Input email is normalized (trimmed + lowercased)
+
+- Reads the "users" list from AsyncStorage
+
+- Compares credentials
+
+- Shows inline error messages for incorrect attempts
+
+On success:
+
+-> Saves user to "user" key
+
+-> Navigates to Home screen
+```
+
+### ✔ Home Screen
+```sh
+- Retrieves active user from global context
+
+- Displays:
+
+-> Name
+
+-> Email
+
+- Logout button clears "user" from AsyncStorage and resets state
+```
+
+### ✔ Password Visibility Toggle
+```sh
+- Implemented using react-native-vector-icons
+
+- Allows user to toggle password between hidden/shown
+
+- Works on both Android and iOS
+```
+
+## Tech Used
 
 ```sh
-# Using npm
-npm start
+- React Native CLI
 
-# OR using Yarn
-yarn start
+iOS:
+
+-> Input autocapitalization disabled
+
+-> Email normalization added
+
+-> Vector icons autolinked
+
+Android:
+
+-> Gradle autolinking used
+
+-> Font fixes applied for vector icons
+
+
+- React Navigation Stack
+
+- AsyncStorage (@react-native-async-storage/async-storage)
+
+- Context API for global auth state
+
+- react-native-vector-icons for the eye icon
+
+Everything is implemented without any backend — all data is stored locally on the device.
+```
+
+## Project Structure
+
+```sh
+src/
+ ├── context/
+ │     └── AuthContext.js     # Authentication logic (signup, login, logout)
+ ├── navigation/
+ │     └── AppNavigator.js    # Controls which screen loads
+ └── screens/
+       ├── LoginScreen.js
+       ├── SignupScreen.js
+       └── HomeScreen.js
+App.js                         # Root file wrapping everything with AuthProvider
+
+```
+
+## Step 1:  Install dependencies
+Before running the project, make sure you have:
+
+Node.js : **v25.2.1**
+
+JAVA : **v17.0.17**
+
+
+### Android Studio
+Android Studio Otter
+
+Android Virtual Device (AVD) installed
+
+ANDROID_HOME properly configured
+
+### Xcode (for macOS/iOS)
+Xcode:** v26.1.1**
+
+React Native CLI tools
+
+```sh
+npm install -g react-native-cli
+```
+
+```sh
+npm install
 ```
 
 ## Step 2: Build and run your app
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Android setup
 
-### Android
+Make sure your emulator is running:
 
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npx react-native run-android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### iOS setup
 
 ```sh
-bundle install
+cd ios
+pod install
+cd ..
 ```
 
-Then, and every time you update your native dependencies, run:
+ Run the app
 
 ```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npx react-native run-ios
 ```
 
 If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-## Step 3: Modify your app
+## 📸 Screenshots
 
-Now that you have successfully run the app, let's make changes!
+### **Login Screen**
+<table>
+<tr>
+<td><img src="./screenshots/iOS-login.png" width="200"></td>
+<td><img src="./screenshots/android-login.png" width="200"></td>
+</tr>
+<tr>
+<td align="center">iOS</td>
+<td align="center">Android</td>
+</tr>
+</table>
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+---
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### **Signup Screen**
+<table>
+<tr>
+<td><img src="./screenshots/iOS-signup.png" width="200"></td>
+<td><img src="./screenshots/android-signup.png" width="200"></td>
+</tr>
+<tr>
+<td align="center">iOS</td>
+<td align="center">Android</td>
+</tr>
+</table>
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+### **Home Screen**
+<table>
+<tr>
+<td><img src="./screenshots/iOS-homescreen.png" width="200"></td>
+<td><img src="./screenshots/android-homescreen.png" width="200"></td>
+</tr>
+<tr>
+<td align="center">iOS</td>
+<td align="center">Android</td>
+</tr>
+</table>
 
-You've successfully run and modified your React Native App. :partying_face:
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
